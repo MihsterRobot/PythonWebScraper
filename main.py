@@ -14,7 +14,7 @@ results = soup.find(id="ResultsContainer")  # Find specific HTML element by ID
 # .prettify() formats the parse tree such that each tag is on its own separate line with indentation
 print(results.prettify())
 
-# find_all() returns an iterable containing all HTML for all job listings displayed on the page
+# find_all() returns an iterable containing all HTML for all job listings displayed on page
 job_elements = results.find_all("div", class_="card-content")
 
 for job_element in job_elements:
