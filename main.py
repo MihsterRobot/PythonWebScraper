@@ -14,7 +14,7 @@ results = soup.find(id="ResultsContainer")  # Find specific HTML element by ID
 # .prettify() formats the parse tree such that each tag is on its own separate line with indentation
 print(results.prettify())
 
-# find_all() returns an iterable containing all HTML for all job listings displayed on the page
+# find_all() returns iterable containing all HTML for all job listings displayed on page
 job_elements = results.find_all("div", class_="card-content")
 
 for job_element in job_elements:
@@ -29,8 +29,21 @@ for job_element in job_elements:
     print(company_element.text.strip())
     print(location_element.text.strip(), "\n")
 
-# Finds all <h2> elements where contained string matches "Python" exactly
-python_jobs = results.find_all("h2", string="Python")
+# Passing anonymous function (lambda function) to string=, which looks at each
+# <h2> element, converts it to lowercase, and checks for substring "python"
+python_jobs = results.find_all("h2", string=lambda text: "python" in text.lower())
 
-# Prints empty list because exact string "Python" doesn't exist in job listings
-print(python_jobs)
+# Using list comprehension ["expression" for "member" in "iterable"]
+python_job_elements = [h2_element.parent.parent.parent for h2_element in python_jobs]
+
+print("Number of Python jobs: ", end="")
+print(len(python_jobs))
+
+for job_element in python_job_elements:
+    title_element = job_element.find("h2", class_="title")
+    company_element = job_element.find("h3", class_="company")
+    location_element = job_element.find("p", class_="location")
+    print(title_element.text.strip())
+    print(company_element.text.strip())
+    print(location_element.text.strip())
+    print()
