@@ -47,3 +47,10 @@ for job_element in python_job_elements:
     print(company_element.text.strip())
     print(location_element.text.strip())
     print()
+ 
+# Print URL for applying to Python jobs
+for job_element in python_job_elements:
+    links = job_element.find_all("a", string=lambda text: "Apply" in text)
+    for link in links:
+        link_url = link["href"]
+        print(f"Apply here: {link_url}n")
